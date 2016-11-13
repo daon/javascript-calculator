@@ -7,6 +7,9 @@
     "url": "git@github.com:daon/javascript-calculator.git",
     "type": "git"
   },
+  "scripts": {
+    "test": "jest"
+  },
   "author": "Dan Andersson <dan.andersson@chimpiq.com> (https://chimpiq.com/)",
   "license": "MIT",
   "dependencies": {
