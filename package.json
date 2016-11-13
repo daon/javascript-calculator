@@ -1,0 +1,15 @@
+{
+  "name": "javascript-calculator",
+  "version": "1.0.0",
+  "description": "A calculator that helps you add, subtract, multiply and divide numbers.",
+  "main": "index.js",
+  "repository": {
+    "url": "git@github.com:daon/javascript-calculator.git",
+    "type": "git"
+  },
+  "author": "Dan Andersson <dan.andersson@chimpiq.com> (https://chimpiq.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "jest-cli": "^17.0.0"
+  }
+}
