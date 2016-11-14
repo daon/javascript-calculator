@@ -1,17 +1,49 @@
 var calculator = (function () {
-
-    var isNumber = function (n) {
-        return typeof n === 'number' && !isNaN(n);
+    var input = '';
+    var expressions = [];
+    var operators = {
+        '+': function (a, b) {
+            return a + b;
+        },
+        '-': function (a, b) {
+            return a - b;
+        },
+        '*': function (a, b) {
+            return a * b;
+        },
+        '/': function (a, b) {
+            return a / b;
+        }
     };
 
-    return {
-        add: function (a, b) {
-            if (!isNumber(a) || !isNumber(b)) {
-                throw new TypeError('Argument must be of type number.');
-            }
+    var isOperator = function (input) {
+        return operators.hasOwnProperty(input);
+    }
 
-            return a + b;
+    return {
+        getInput: function () {
+            return input || '0';
+        },
+
+        getOutput: function () {
+            return expressions.join('') + input || '0';
+        },
+
+        inputDigit: function (digit) {
+            if (isOperator(input)) {
+                expressions.push(input);
+                input = '';
+            }
+            input += digit.toString();
+        },
+
+        inputOperator: function (operator) {
+            if (isOperator(input) && !isOperator(operator)) { return; }
+
+            expressions.push(input);
+            input = operator;
         }
+
     };
 })();
 
