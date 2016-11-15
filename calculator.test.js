@@ -68,4 +68,12 @@ describe('calculator', function() {
         calculator.inputOperator('=');
         expect(calculator.getInput()).toBe('3');
     });
+
+    it('inputing digit 1, operator "+", digit 2 and operator "=" should return output "1+2=3"', function() {
+        calculator.inputDigit(1);
+        calculator.inputOperator('+');
+        calculator.inputDigit(2);
+        calculator.inputOperator('=');
+        expect(calculator.getOutput()).toBe('1+2=3');
+    });
 });

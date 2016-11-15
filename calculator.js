@@ -1,7 +1,14 @@
 var calculator = (function () {
     var input = '';
-    var expressions = [];
-    var operators = {
+    var expression = [];
+
+    var calculate = function (firstNumber, operation) {
+        return function (secondNumber) {
+            return operation(parseInt(firstNumber, 10), parseInt(secondNumber, 10));
+        }
+    };
+
+    var operations = {
         '+': function (a, b) {
             return a + b;
         },
@@ -16,9 +23,19 @@ var calculator = (function () {
         }
     };
 
+    var getResult = function () {
+        return expression.reduce(function (firstSymbol, secondSymbol) {
+            if (typeof firstSymbol === 'function') {
+                return firstSymbol(secondSymbol);
+            }
+
+            return calculate(firstSymbol, operations[secondSymbol]);
+        });
+    };
+
     var isOperator = function (input) {
-        return operators.hasOwnProperty(input);
-    }
+        return operations.hasOwnProperty(input) || input === '=';
+    };
 
     return {
         getInput: function () {
@@ -26,12 +43,12 @@ var calculator = (function () {
         },
 
         getOutput: function () {
-            return expressions.join('') + input || '0';
+            return expression.join('') + input || '0';
         },
 
         inputDigit: function (digit) {
             if (isOperator(input)) {
-                expressions.push(input);
+                expression.push(input);
                 input = '';
             }
             input += digit.toString();
@@ -40,9 +57,15 @@ var calculator = (function () {
         inputOperator: function (operator) {
             if (isOperator(input) && !isOperator(operator)) { return; }
 
-            expressions.push(input);
-            input = operator;
-        }
+            expression.push(input);
+            if (operator === '=') {
+                var result = getResult();
+                expression.push(operator);
+                input = result.toString();
+            } else {
+                input = operator;
+            }
+        },
 
     };
 })();
