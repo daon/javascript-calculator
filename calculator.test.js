@@ -5,46 +5,80 @@ describe('calculator', function() {
         calculator = require('./calculator');
     });
 
-    it('should display entry "0""', function () {
-        var entry = calculator.getEntry();
-        expect(entry).toBe('0');
+    describe('getCurrentInput', function() {
+        it('should return "0" when no inputs have been made', function() {
+            expect(calculator.getCurrentInput()).toBe('0');
+        });
+
+        it('should return "1" when adding input 1', function() {
+            calculator.addInput(1);
+            expect(calculator.getCurrentInput()).toBe('1');
+        });
+
+        it('should return "12" when adding inputs 1 and 2', function() {
+            calculator.addInput(1);
+            calculator.addInput(2);
+            expect(calculator.getCurrentInput()).toBe('12');
+        });
+
+        it('should return "+" when adding inputs 1 and "+"', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            expect(calculator.getCurrentInput()).toBe('+');
+        });
+
+        it('should return "2" when adding inputs 1, "+" and 2', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            expect(calculator.getCurrentInput()).toBe('2');
+        });
+
+        it('should return "3" when adding inputs 1, "+", 2 and "="', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            calculator.addInput('=');
+            expect(calculator.getCurrentInput()).toBe('3');
+        });
     });
 
-    it('should display status "0"', function () {
-        var status = calculator.getStatus();
-        expect(status).toBe('0');
+    describe('getExpression', function() {
+        it('should return "0" when no inputs has beens made', function() {
+            expect(calculator.getExpression()).toBe('0');
+        });
+    
+        it('should return "1" when adding input 1', function() {
+            calculator.addInput(1);
+            expect(calculator.getExpression()).toBe('1');
+        });
+
+        it('should return "12" when adding inputs 1 and 2', function() {
+            calculator.addInput(1);
+            calculator.addInput(2);
+            expect(calculator.getExpression()).toBe('12');
+        });
+
+        it('should return "1+" when adding inputs 1 and "+"', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            expect(calculator.getExpression()).toBe('1+');
+        });
+
+        it('should return "1+2" when adding inputs 1, "+" and 2', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            expect(calculator.getExpression()).toBe('1+2');
+        });
+
+        it('should return "1+2=3" when adding inputs 1, "+", 2 and "="', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            calculator.addInput('=');
+            expect(calculator.getExpression()).toBe('1+2=3');
+        });
     });
 
-    it('inputting command "1" should return true', function () {
-        var inputSucceeded = calculator.inputCommand(1);
-        expect(inputSucceeded).toBe(true);
-    });
-
-    it('inputting command "+" should return false', function () {
-        var inputSucceeded = calculator.inputCommand('+');
-        expect(inputSucceeded).toBe(false);
-    });
-
-    it('inputting command "12" should throw error "Invalid Command"', function () {
-        var result = function () { return calculator.inputCommand(12) };
-        expect(result).toThrowError('Invalid Command');
-    });
-
-    it('inputting command "1" should display entry "1"', function () {
-        calculator.inputCommand(1);
-        var entry = calculator.getEntry();
-        expect(entry).toBe('1');
-    });
-
-    it('inputting command "1" should display status "1"', function () {
-        calculator.inputCommand(1);
-        var status = calculator.getStatus();
-        expect(status).toBe('1');
-    });
-
-    it('inputting commands "1", "+" should return true', function () {
-        calculator.inputCommand(1);
-        var inputSucceeded = calculator.inputCommand('+');
-        expect(inputSucceeded).toBe(true);
-    });
 });
