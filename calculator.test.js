@@ -41,6 +41,71 @@ describe('calculator', function() {
             calculator.addInput('=');
             expect(calculator.getCurrentInput()).toBe('3');
         });
+
+        it('should return "-1" when adding inputings 1, "-", 2 and "="', function() {
+            calculator.addInput(1);
+            calculator.addInput('-');
+            calculator.addInput(2);
+            calculator.addInput('=');
+            expect(calculator.getCurrentInput()).toBe('-1');
+        });
+
+        it('should return "2" when adding inputings 1, "*", 2 and "="', function() {
+            calculator.addInput(1);
+            calculator.addInput('*');
+            calculator.addInput(2);
+            calculator.addInput('=');
+            expect(calculator.getCurrentInput()).toBe('2');
+        });
+
+        it('should return "0.5" when adding inputings 1, "/", 2 and "="', function() {
+            calculator.addInput(1);
+            calculator.addInput('/');
+            calculator.addInput(2);
+            calculator.addInput('=');
+            expect(calculator.getCurrentInput()).toBe('0.5');
+        });
+
+        it('should return "0" when adding inputings 1, "+", 2 and "AC"', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            calculator.addInput('AC');
+            expect(calculator.getCurrentInput()).toBe('0');
+        });
+
+        it('should return "0" when adding inputings 1, "+", 2 and "CE"', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            calculator.addInput('CE');
+            expect(calculator.getCurrentInput()).toBe('0');
+        });
+
+        it('should return "5" when adding inputings 1, "+", 2, "*", 3, "-", 4 and "="', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            calculator.addInput('*');
+            calculator.addInput(3);
+            calculator.addInput('-');
+            calculator.addInput(4);
+            calculator.addInput('=');
+            expect(calculator.getCurrentInput()).toBe('5');
+        });
+
+        it('should return "0" when adding more then 8 digits', function() {
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            expect(calculator.getCurrentInput()).toBe('0');
+        });
     });
 
     describe('getExpression', function() {
@@ -78,6 +143,71 @@ describe('calculator', function() {
             calculator.addInput(2);
             calculator.addInput('=');
             expect(calculator.getExpression()).toBe('1+2=3');
+        });
+        
+        it('should return "1-2=-1" when adding inputs 1, "-", 2 and "="', function() {
+            calculator.addInput(1);
+            calculator.addInput('-');
+            calculator.addInput(2);
+            calculator.addInput('=');
+            expect(calculator.getExpression()).toBe('1-2=-1');
+        });
+
+        it('should return "1*2=2" when adding inputs 1, "*", 2 and "="', function() {
+            calculator.addInput(1);
+            calculator.addInput('*');
+            calculator.addInput(2);
+            calculator.addInput('=');
+            expect(calculator.getExpression()).toBe('1*2=2');
+        });
+
+        it('should return "1/2=0.5" when adding inputs 1, "/", 2 and "="', function() {
+            calculator.addInput(1);
+            calculator.addInput('/');
+            calculator.addInput(2);
+            calculator.addInput('=');
+            expect(calculator.getExpression()).toBe('1/2=0.5');
+        });
+
+        it('should return "0" when adding inputings 1, "+", 2 and "AC"', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            calculator.addInput('AC');
+            expect(calculator.getExpression()).toBe('0');
+        });
+
+        it('should return "1+" when adding inputings 1, "+", 2 and "CE"', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            calculator.addInput('CE');
+            expect(calculator.getExpression()).toBe('1+');
+        });
+
+        it('should return "1+2*3-4=5" when adding inputings 1, "+", 2, "*", 3, "-", 4 and "="', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            calculator.addInput('*');
+            calculator.addInput(3);
+            calculator.addInput('-');
+            calculator.addInput(4);
+            calculator.addInput('=');
+            expect(calculator.getExpression()).toBe('1+2*3-4=5');
+        });
+
+        it('should return "Digit Limit Met" when adding more then 8 digits', function() {
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            calculator.addInput(1);
+            expect(calculator.getExpression()).toBe('Digit Limit Met');
         });
     });
 

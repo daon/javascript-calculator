@@ -2,6 +2,8 @@ var calculator = (function () {
     var inputs = [];
     var currentInput = 0;
     var expression = '0';
+    var digitLimit = 8;
+    var digitLimitError = 'Digit Limit Met';
 
     var operators = {
         '+': function (a, b) {
@@ -22,13 +24,32 @@ var calculator = (function () {
         return operators.hasOwnProperty(input);
     };
 
+    var isDigit = function(input) {
+        return input >= 0 && input < 10;
+    };
+
+    var isNumber = function(input) {
+        return typeof input === 'number' && !isNaN(input);
+    };
+
+    var isDigitLimitMet = function(input) {
+        return input >  Math.pow(10, digitLimit-1);
+    };
+
+    var setExpression = function(input) {
+        input = typeof input === 'string' ? input : currentInput;
+        expression = inputs.join('') + input.toString();
+    };
+
     var commands = {
         'AC': function() {
             inputs = [];
-            currentInput = '0';
+            currentInput = 0;
+            setExpression();
         },
         'CE': function() {
-            currentInput = '0';
+            currentInput = 0;
+            setExpression('');
         },
         '=': function() {
             if (inputs.length < 2  || isOperator(currentInput)) {
@@ -36,7 +57,7 @@ var calculator = (function () {
             }
             inputs.push(currentInput);
             currentInput = getResult();
-            expression = inputs.join('') + '=' + currentInput.toString();
+            setExpression('=' + currentInput.toString());
             inputs = [];
         },
         '.': function() {
@@ -64,14 +85,6 @@ var calculator = (function () {
         });
     };
 
-    var isDigit = function(input) {
-        return input >= 0 && input < 10;
-    };
-
-    var isNumber = function(input) {
-        return typeof input === 'number' && !isNaN(input);
-    };
-
     return {
         getCurrentInput: function () {
             return currentInput.toString();
@@ -92,17 +105,22 @@ var calculator = (function () {
                 inputs.push(currentInput);
                 currentInput = input;
 
-                expression = inputs.join('') + currentInput.toString();
+                setExpression();
             }
             else if (isDigit(input)) {
                 if (isNumber(currentInput)) {
+                    if (isDigitLimitMet(currentInput)) {
+                        currentInput = 0;
+                        expression = digitLimitError;
+                        return;
+                    }
                     currentInput = (currentInput * 10) + input;
                 } else if (isOperator(currentInput)) {
                     inputs.push(currentInput);
                     currentInput = input;
                 }
 
-                expression = inputs.join('') + currentInput.toString();
+                setExpression();
             }
 
         }
