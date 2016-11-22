@@ -1,7 +1,9 @@
 var calculator = (function () {
     var inputs = [];
     var currentInput = 0;
+    var entry = '';
     var expression = '0';
+    var isDecimal = true;
     var digitLimit = 8;
     var digitLimitError = 'Digit Limit Met';
 
@@ -32,8 +34,8 @@ var calculator = (function () {
         return typeof input === 'number' && !isNaN(input);
     };
 
-    var isDigitLimitMet = function(input) {
-        return input >  Math.pow(10, digitLimit-1);
+    var isDigitLimitMet = function() {
+        return entry.length > digitLimit - 1;
     };
 
     var setExpression = function(input) {
@@ -41,14 +43,26 @@ var calculator = (function () {
         expression = inputs.join('') + input.toString();
     };
 
+    var getResult = function () {
+        return inputs.reduce(function (firstSymbol, secondSymbol) {
+            if (typeof firstSymbol === 'function') {
+                return firstSymbol(secondSymbol);
+            }
+
+            return calculate(firstSymbol, operators[secondSymbol]);
+        });
+    };
+
     var commands = {
         'AC': function() {
             inputs = [];
             currentInput = 0;
+            entry = currentInput.toString();
             setExpression();
         },
         'CE': function() {
             currentInput = 0;
+            entry = currentInput.toString();
             setExpression('');
         },
         '=': function() {
@@ -57,11 +71,16 @@ var calculator = (function () {
             }
             inputs.push(currentInput);
             currentInput = getResult();
+            entry = currentInput.toString();
             setExpression('=' + currentInput.toString());
             inputs = [];
         },
         '.': function() {
-
+            if (isDecimal) {
+                entry = (entry || '0') + '.';
+                expression = entry;
+                isDecimal = false;
+            }
         }
     };
 
@@ -75,19 +94,40 @@ var calculator = (function () {
         }
     };
 
-    var getResult = function () {
-        return inputs.reduce(function (firstSymbol, secondSymbol) {
-            if (typeof firstSymbol === 'function') {
-                return firstSymbol(secondSymbol);
+    var addDigit = function(input) {
+        if (isNumber(currentInput)) {
+            if (isDigitLimitMet(currentInput)) {
+                currentInput = 0;
+                entry = '0';
+                expression = digitLimitError;
+                return;
             }
 
-            return calculate(firstSymbol, operators[secondSymbol]);
-        });
+            entry += input.toString();
+            currentInput = (currentInput * 10) + input;
+        } else if (isOperator(currentInput)) {
+            inputs.push(currentInput);
+            entry = input.toString();
+        }
+
+        currentInput = isDecimal ? parseInt(entry) : parseFloat(entry);
+        setExpression();
+    };
+
+    var addOperator = function(input) {
+        if (isOperator(currentInput)) {
+            return false;
+        }
+        inputs.push(currentInput);
+        currentInput = input;
+
+        entry = currentInput.toString();
+        setExpression();
     };
 
     return {
-        getCurrentInput: function () {
-            return currentInput.toString();
+        getEntry: function () {
+            return entry || '0';
         },
 
         getExpression: function () {
@@ -99,31 +139,12 @@ var calculator = (function () {
                 commands[input]();
             }
             else if (isOperator(input)) {
-                if (isOperator(currentInput)) {
-                    return false;
-                }
-                inputs.push(currentInput);
-                currentInput = input;
-
-                setExpression();
+                addOperator(input);
             }
             else if (isDigit(input)) {
-                if (isNumber(currentInput)) {
-                    if (isDigitLimitMet(currentInput)) {
-                        currentInput = 0;
-                        expression = digitLimitError;
-                        return;
-                    }
-                    currentInput = (currentInput * 10) + input;
-                } else if (isOperator(currentInput)) {
-                    inputs.push(currentInput);
-                    currentInput = input;
-                }
-
-                setExpression();
+                addDigit(input);
             }
-
-        }
+        },
     };
 })();
 
