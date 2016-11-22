@@ -8,11 +8,13 @@
     "type": "git"
   },
   "scripts": {
+    "dev": "lite-server",
     "test": "jest"
   },
   "author": "Dan Andersson <dan.andersson@chimpiq.com> (https://chimpiq.com/)",
   "license": "MIT",
   "dependencies": {
-    "jest-cli": "^17.0.0"
+    "jest-cli": "^17.0.0",
+    "lite-server": "^2.2.2"
   }
 }
