@@ -2,13 +2,47 @@
 <html>
     <head>
         <title>JavaScript Calculator</title>
+
+        <link rel="stylesheet" href="./styles.css">
     </head>
     <body>
         <div class="calculator">
             <div class="display">
+                <div class="entry">0</div>
+                <div class="expression">0</div>
             </div>
-            <button type="button">AC</button>
-            <button type="button">CE</button>
+            <div class="flex-grid">
+                <button type="button" class="col-25 btn">AC</button>
+                <button type="button" class="col-25 btn">CE</button>
+                <button type="button" class="col-25 btn">&#43;</button>
+                <button type="button" class="col-25 btn">x</button>
+            </div>
+            <div class="flex-grid">
+                <button type="button" class="col-25 btn">7</button>
+                <button type="button" class="col-25 btn">8</button>
+                <button type="button" class="col-25 btn">9</button>
+                <button type="button" class="col-25 btn">-</button>
+            </div>
+            <div class="flex-grid">
+                <button type="button" class="col-25 btn">4</button>
+                <button type="button" class="col-25 btn">5</button>
+                <button type="button" class="col-25 btn">6</button>
+                <button type="button" class="col-25 btn">+</button>
+            </div>
+            <div class="flex-grid">
+                <div class="col-75">
+                    <div class="flex-grid">
+                        <button type="button" class="col-33 btn">1</button>
+                        <button type="button" class="col-33 btn">2</button>
+                        <button type="button" class="col-33 btn">3</button>                        
+                    </div>
+                    <div class="flex-grid">
+                        <button type="button" class="col-75 btn">0</button>
+                        <button type="button" class="col-25 btn">.</button>
+                    </div>
+                </div>
+                <button type="button" class="col-25 btn">=</button>
+            </div>
         </div>
     </body>
 </html>

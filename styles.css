@@ -1,0 +1,46 @@
+.flex-grid {
+    display: flex;
+    flex: 1 0 auto;
+    margin-bottom: 5px;
+}
+
+.col-25 {
+    flex: 25%;
+    margin-left: 5px;
+}
+
+.col-25:first-child,
+.col-33:first-child {
+    margin-left: 0;
+}
+
+.col-50 {
+    flex: 50%;
+}
+
+.col-33 {
+    flex: 33%;
+    margin-left: 5px;
+}
+
+.col-75 {
+    flex: 75%;
+}
+
+.calculator {
+    width: 100%;
+}
+
+.display {
+    background: #eee;
+    color: #333;
+    font-family: Courier New, Courier, monospace;
+    text-align: right;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.btn {
+    padding: 1em;
+}
