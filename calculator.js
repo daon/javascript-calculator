@@ -144,8 +144,7 @@ var calculator = (function () {
             else if (isDigit(input)) {
                 addDigit(input);
             }
+            console.log(input);
         },
     };
 })();
-
-module.exports = calculator;

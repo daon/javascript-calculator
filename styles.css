@@ -1,30 +1,19 @@
-.flex-grid {
+.row {
     display: flex;
-    flex: 1 0 auto;
-    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
-.col-25 {
-    flex: 25%;
+.row:first-child {
+    margin-top: 0;
+}
+
+.col {
+    flex: 1;
     margin-left: 5px;
 }
 
-.col-25:first-child,
-.col-33:first-child {
+.col:first-child {
     margin-left: 0;
-}
-
-.col-50 {
-    flex: 50%;
-}
-
-.col-33 {
-    flex: 33%;
-    margin-left: 5px;
-}
-
-.col-75 {
-    flex: 75%;
 }
 
 .calculator {
@@ -43,4 +32,6 @@
 
 .btn {
     padding: 1em;
+    width: 100%;
+    height: 100%;
 }
