@@ -57,12 +57,12 @@ var calculator = (function () {
         'AC': function() {
             inputs = [];
             currentInput = 0;
-            entry = currentInput.toString();
+            entry = '';
             setExpression();
         },
         'CE': function() {
             currentInput = 0;
-            entry = currentInput.toString();
+            entry = '';
             setExpression('');
         },
         '=': function() {
@@ -98,7 +98,7 @@ var calculator = (function () {
         if (isNumber(currentInput)) {
             if (isDigitLimitMet(currentInput)) {
                 currentInput = 0;
-                entry = '0';
+                entry = '';
                 expression = digitLimitError;
                 return;
             }
@@ -144,7 +144,6 @@ var calculator = (function () {
             else if (isDigit(input)) {
                 addDigit(input);
             }
-            console.log(input);
         },
     };
 })();
