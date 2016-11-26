@@ -1,4 +1,6 @@
-var app = (function(root, calculator) {
+var calculator = require('./calculator/calculator');
+
+var app = (function app(root, calculator) {
     'use strict';
     
     var app = {};
@@ -47,10 +49,5 @@ var app = (function(root, calculator) {
     return app;
 })(window, calculator);
 
-if (document.readyState === 'complete') {
-    app.init('#my-calculator');
-} else {
-    document.addEventListener('DOMContentLoaded', function() {
-        app.init('#my-calculator');
-    }, false);
-}
+module.exports = app;
+

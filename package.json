@@ -8,13 +8,14 @@
     "type": "git"
   },
   "scripts": {
-    "dev": "lite-server",
+    "server:dev": "webpack-dev-server --progress --profile --watch --content-base src/ --inline --hot",
     "test": "jest"
   },
   "author": "Dan Andersson <dan.andersson@chimpiq.com> (https://chimpiq.com/)",
   "license": "MIT",
   "dependencies": {
     "jest-cli": "^17.0.0",
-    "lite-server": "^2.2.2"
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
   }
 }

@@ -1,8 +1,8 @@
-var calculator = (function () {
+var calculator = (function (root) {
     var inputs = [];
     var currentInput = 0;
     var entry = '';
-    var expression = '0';
+    var expression = '';
     var isDecimal = true;
     var digitLimit = 8;
     var digitLimitError = 'Digit Limit Met';
@@ -58,11 +58,13 @@ var calculator = (function () {
             inputs = [];
             currentInput = 0;
             entry = '';
+            isDecimal = true;
             setExpression();
         },
         'CE': function() {
             currentInput = 0;
             entry = '';
+            isDecimal = true;
             setExpression('');
         },
         '=': function() {
@@ -74,11 +76,12 @@ var calculator = (function () {
             entry = currentInput.toString();
             setExpression('=' + currentInput.toString());
             inputs = [];
+            isDecimal = true;
         },
         '.': function() {
             if (isDecimal) {
                 entry = (entry || '0') + '.';
-                expression = entry;
+                expression = expression ? expression + '.' : entry;
                 isDecimal = false;
             }
         }
@@ -100,6 +103,7 @@ var calculator = (function () {
                 currentInput = 0;
                 entry = '';
                 expression = digitLimitError;
+                isDecimal = true;
                 return;
             }
 
@@ -131,7 +135,7 @@ var calculator = (function () {
         },
 
         getExpression: function () {
-            return expression;
+            return expression || '0';
         },
 
         addInput: function (input) {
@@ -144,6 +148,11 @@ var calculator = (function () {
             else if (isDigit(input)) {
                 addDigit(input);
             }
+
+            console.log('input: ' + input);
+            console.log('expression: ' + expression);
         },
     };
-})();
+})(window);
+
+module.exports = calculator;
