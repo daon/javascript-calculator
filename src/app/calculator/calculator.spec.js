@@ -149,6 +149,15 @@ describe('calculator', function() {
             calculator.addInput(1);
             expect(calculator.getEntry()).toBe('0');
         });
+
+        it('should return "5" when adding input 1, "+", 2, "=" and 5', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            calculator.addInput('=');
+            calculator.addInput(5);
+            expect(calculator.getEntry()).toBe('5');
+        });
     });
 
     describe('getExpression', function() {
@@ -295,6 +304,15 @@ describe('calculator', function() {
             calculator.addInput(1);
             expect(calculator.getExpression()).toBe('Digit Limit Met');
         });
+
+        it('should return "3+" when adding inputs 1, "+", 2, "=" and "+"', function() {
+            calculator.addInput(1);
+            calculator.addInput('+');
+            calculator.addInput(2);
+            calculator.addInput("=");
+            calculator.addInput("+");
+            expect(calculator.getExpression()).toBe('3+');      
+        })
     });
 
 });

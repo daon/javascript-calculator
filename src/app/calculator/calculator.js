@@ -1,6 +1,7 @@
 var calculator = (function (root) {
     var inputs = [];
     var currentInput = 0;
+    var result = 0;
     var entry = '';
     var expression = '';
     var isDecimal = true;
@@ -72,9 +73,10 @@ var calculator = (function (root) {
                 return false;
             }
             inputs.push(currentInput);
-            currentInput = getResult();
-            entry = currentInput.toString();
-            setExpression('=' + currentInput.toString());
+            currentInput = '=';
+            result = getResult();
+            entry = result.toString();
+            setExpression('=' + entry);
             inputs = [];
             isDecimal = true;
         },
@@ -112,6 +114,8 @@ var calculator = (function (root) {
         } else if (isOperator(currentInput)) {
             inputs.push(currentInput);
             entry = input.toString();
+        } else {
+            entry = input.toString();
         }
 
         currentInput = isDecimal ? parseInt(entry) : parseFloat(entry);
@@ -121,8 +125,11 @@ var calculator = (function (root) {
     var addOperator = function(input) {
         if (isOperator(currentInput)) {
             return false;
+        } else if (currentInput === '=') {
+            inputs.push(result);
+        } else {
+            inputs.push(currentInput);
         }
-        inputs.push(currentInput);
         currentInput = input;
 
         entry = currentInput.toString();
@@ -148,9 +155,6 @@ var calculator = (function (root) {
             else if (isDigit(input)) {
                 addDigit(input);
             }
-
-            console.log('input: ' + input);
-            console.log('expression: ' + expression);
         },
     };
 })(window);
